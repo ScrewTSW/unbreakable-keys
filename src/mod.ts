@@ -27,7 +27,7 @@ class UbreakableKeys implements IPostDBLoadMod {
         for (const item in items) {
             const itemProps = items[item]._props;
 
-            if (this.modConfig.enable_blacklist && this.modConfig.blacklisted_keys.includes(items[item]._id))
+            if (this.modConfig.enable_blacklist && this.modConfig.blacklisted_items.includes(items[item]._id))
                 continue;
 
             if (items[item]._parent == BaseClasses.KEY_MECHANICAL) {
