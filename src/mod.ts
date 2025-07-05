@@ -1,26 +1,20 @@
+import { jsonc } from "jsonc";
+import path from "node:path";
 import { DependencyContainer } from "tsyringe";
 
 import { IPostDBLoadMod } from "@spt/models/external/IPostDBLoadMod";
 import { ILogger } from "@spt/models/spt/utils/ILogger";
 import { DatabaseServer } from "@spt/servers/DatabaseServer";
 import { IDatabaseTables } from "@spt/models/spt/server/IDatabaseTables";
+import { LogTextColor } from "@spt/models/spt/logging/LogTextColor";
+import { BaseClasses } from "@spt/models/enums/BaseClasses";
 
-class UbreakableKeys implements IPostDBLoadMod
-{
+class UbreakableKeys implements IPostDBLoadMod {
 
-    private modConfig = require("../config/config.json");
-    private mod = require("../package.json");
+    private readonly modConfig = jsonc.readSync(path.join(__dirname, '..', 'config', 'config.jsonc'));
+    private readonly mod = jsonc.readSync(path.join(__dirname, '..', 'package.json'));
 
-    private color = require("C:/snapshot/project/obj/models/spt/logging/LogTextColor");
-    private baseClasses = require("C:/snapshot/project/obj/models/enums/BaseClasses");
-
-    public postDBLoad(container: DependencyContainer): void
-    {
-
-        const config = this.modConfig
-        const color = this.color.LogTextColor
-        const baseClasses = this.baseClasses.BaseClasses
-
+    public postDBLoad(container: DependencyContainer): void {
         // get database
         const databaseServer = container.resolve<DatabaseServer>("DatabaseServer");
         const tables: IDatabaseTables = databaseServer.getTables();
@@ -30,37 +24,34 @@ class UbreakableKeys implements IPostDBLoadMod
         const logger = container.resolve<ILogger>("WinstonLogger");
 
         // Logic
-        for (const item in items)
-        {
+        for (const item in items) {
             const itemProps = items[item]._props;
 
-            if (config.enable_blacklist && config.blacklisted_keys.includes(items[item]._id))
+            if (this.modConfig.enable_blacklist && this.modConfig.blacklisted_keys.includes(items[item]._id))
                 continue;
 
-            if (items[item]._parent == baseClasses.KEY_MECHANICAL)
-            {
+            if (items[item]._parent == BaseClasses.KEY_MECHANICAL) {
                 itemProps.DiscardLimit = -1;
 
-                if (config.unbreakable_keys)
+                if (this.modConfig.unbreakable_keys)
                     itemProps.MaximumNumberOfUsage = 0;
 
-                if (config.weightless_keys)
+                if (this.modConfig.weightless_keys)
                     itemProps.Weight = 0.0;
             }
 
-            if (items[item]._parent == baseClasses.KEYCARD)
-            {
+            if (items[item]._parent == BaseClasses.KEYCARD) {
                 itemProps.DiscardLimit = -1;
 
-                if (config.unbreakable_keycards)
+                if (this.modConfig.unbreakable_keycards)
                     itemProps.MaximumNumberOfUsage = 0;
 
-                if (config.weightless_keycards)
+                if (this.modConfig.weightless_keycards)
                     itemProps.Weight = 0.0;
             }
         }
 
-        logger.log(`"${this.mod.name}" has been loaded.`, color.CYAN)
+        logger.log(`"[${this.mod.name}]" has been loaded.`, LogTextColor.CYAN);
     }
 }
 

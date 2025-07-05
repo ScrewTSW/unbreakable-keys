@@ -1,11 +1,11 @@
 {
-    "weightless_keys": true,
-    "unbreakable_keys": true,
+    "weightless_keys": true, // Removes weight from keys
+    "unbreakable_keys": true, // Makes keys unbreakable
 
-    "weightless_keycards": true,
-    "unbreakable_keycards": true,
+    "weightless_keycards": true, // Removes weight from keycards
+    "unbreakable_keycards": true, // Makes keycards unbreakable (does not affect laboratory access cards)
 
-    "enable_blacklist": false,
+    "enable_blacklist": false, //if true, the above options will not affect the keys from the blacklist
     "blacklisted_keys": [
         "5780cf7f2459777de4559322",
         "5d80c60f86f77440373c4ece",
