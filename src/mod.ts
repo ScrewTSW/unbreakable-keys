@@ -8,6 +8,7 @@ import { DatabaseServer } from "@spt/servers/DatabaseServer";
 import { IDatabaseTables } from "@spt/models/spt/server/IDatabaseTables";
 import { LogTextColor } from "@spt/models/spt/logging/LogTextColor";
 import { BaseClasses } from "@spt/models/enums/BaseClasses";
+import { ILocations } from "@spt/models/spt/server/ILocations";
 
 class UbreakableKeys implements IPostDBLoadMod {
 
@@ -19,6 +20,7 @@ class UbreakableKeys implements IPostDBLoadMod {
         const databaseServer = container.resolve<DatabaseServer>("DatabaseServer");
         const tables: IDatabaseTables = databaseServer.getTables();
         const items = Object.values(tables.templates.items);
+        const laboratory = tables.locations?.laboratory;
 
         // get logger
         const logger = container.resolve<ILogger>("WinstonLogger");
@@ -49,6 +51,18 @@ class UbreakableKeys implements IPostDBLoadMod {
                 if (this.modConfig.weightless_keycards)
                     itemProps.Weight = 0.0;
             }
+        }
+
+        // if TerraGroup Labs access keycard is not blacklisted or blacklist does not contain it
+        // exclude it from the Labs access requirements
+        if (!this.modConfig.enable_blacklist || !this.modConfig.blacklisted_items.includes("5c94bbff86f7747ee735c08f")) {
+            // TODO: prevent labs access keycard removal upon raid start
+        }
+
+        // If Free Labs event is enabled, remove access keys from laboratory requirements
+        if (this.modConfig.free_labs_event) {
+            laboratory.base.AccessKeys = [];
+            laboratory.base.AccessKeysPvE = [];
         }
 
         logger.log(`"[${this.mod.name}]" has been loaded.`, LogTextColor.CYAN);
