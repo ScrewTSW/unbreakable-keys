@@ -1,0 +1,40 @@
+{
+    // Makes all non-marked mechanical keys unbreakable
+    "UnbreakableKeys": true,
+
+    // Makes marked keys unbreakable
+    "UnbreakableMarkedKeys": true,
+    "MarkedKeys":
+    [
+        "64d4b23dc1b37504b41ac2b6", // Rusted bloody key                 <<<<<It is recommended to remove the rusty key from this list for a better Tarkov experience
+        "5780cf7f2459777de4559322", // Dorms 314 key
+        "5d80c60f86f77440373c4ece", // RB-BK key
+        "5d80c62a86f7744036212b3f", // RB-PKPM key
+        "62987dfc402c7f69bf010923", // Bedroom key
+        "63a3a93f8a56922e82001f5d", // Abandoned factory marked key
+        "64ccc25f95763a1ae376e447" // 13 Chekannaya Street
+    ],
+
+    // Makes all non-colored keycards unbreakable
+    "UnbreakableKeycards": true,
+
+    // Makes all colored keycards unbreakable
+    "UnbreakableColoredKeycards": true,
+    "ColoredKeycards":
+    [
+        "5751961824597720a31c09ac", // Black keycard
+        "5c1d0c5f86f7744bb2683cf0", // Blue keycard
+        "5c1d0d6d86f7744bb2683e1f", // Yellow keycard
+        "5c1d0dc586f7744baf2e7b79", // Green keycard
+        "5c1d0efb86f7744baf2e7b7b", // Red keycard
+        "5c1e495a86f7743109743dfb", // Violet keycard
+        "5c1d0f4986f7744bb01837fa" // Black keycard
+    ],
+
+    // Mod will not affect items in this list
+    "KeysBlacklist":
+    [
+        "5c94bbff86f7747ee735c08f", // TerraGroup Labs access keycard
+        "679b9819a2f2dd4da9023512" // Labrys access keycard
+    ]
+}
